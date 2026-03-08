@@ -1,60 +1,37 @@
-clc; clear all;
-%==========================================================================
-%                    ACTIVE SUSPENSION SIMULATION
-%                    Nonlinear Quarter-Car Model
-%==========================================================================
+%% ========================================================
+%  FILE: main_openloop.m
+%  Active Suspension Simulation - Nonlinear Quarter-Car
+%% ========================================================
 
-%--------------------------------------------------------------------------
-%                        GLOBAL VARIABLES
-%--------------------------------------------------------------------------
+clc; clear all;
+
 global mb mw k1 k_nl b k2 fa
 global t x1 x1_dot x2 x2_dot Fa_value mode_str
 
-%--------------------------------------------------------------------------
-%                     SYSTEM INITIALIZATION
-%--------------------------------------------------------------------------
-% Load physical parameters (masses, stiffness, damping)
+%% ---- Load Parameters & Matrices --------------------
 parameters
-
-% Build system matrices (state-space representation)
 matrices
 
-%--------------------------------------------------------------------------
-%                      SIMULINK MODEL SETUP
-%--------------------------------------------------------------------------
-% Define Simulink model name
+%% ---- Simulink Model Setup --------------------------
 modelName = 'ActiveSupensionNonlinear';
-
-% Set simulation duration to 5 seconds
 set_param(modelName, 'StopTime', '5');
 
-%--------------------------------------------------------------------------
-%                      ACTUATOR FORCE CONFIGURATION
-%--------------------------------------------------------------------------
-% Set actuator force value (0 = Passive | nonzero = Active)
+%% ---- Actuator Force Configuration ------------------
+% Set to 0 for Passive | nonzero for Active
 Fa_value = 20;
-
-% Update actuator force block inside Simulink model
 set_param([modelName '/fa'], 'Value', num2str(Fa_value));
 
-%--------------------------------------------------------------------------
-%                        OPERATION MODE SELECTION
-%--------------------------------------------------------------------------
+%% ---- Operation Mode --------------------------------
 if Fa_value == 0
-    mode_str = 'PASSIVE';   % No control force applied
+    mode_str = 'PASSIVE';
 else
-    mode_str = 'ACTIVE';    % Control force active
+    mode_str = 'ACTIVE';
 end
-
-% Display selected mode in command window
 fprintf('Running %s suspension simulation...\n', mode_str);
 
-%--------------------------------------------------------------------------
-%                         RUN SIMULATION
-%--------------------------------------------------------------------------
+%% ---- Run Simulation --------------------------------
 sim(modelName);
 
-%--------------------------------------------------------------------------
-%                        PLOT RESULTS
-%--------------------------------------------------------------------------
-plotSuspensionResults();
+%% ---- Plot Results ----------------------------------
+plotStateResponses();
+plotPerformanceVsRoad();
