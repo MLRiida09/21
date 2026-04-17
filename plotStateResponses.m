@@ -1,43 +1,69 @@
 %% ========================================================
 %  FUNCTION: plotStateResponses
-%  Figure 2.7 - Réponse de système de suspension en 
-%  boucle ouverte, cas modèle quart de véhicule.
+%  Open-Loop Response - Nonlinear Quarter-Car Model
 %% ========================================================
-
 function plotStateResponses()
+global t x1 x2
 
-global t x1 x2 mode_str
+delta = x1 - x2;   % Suspension deflection: Zs - Zu
 
-%% ---- Débattement -----------------------------------
-delta = x1 - x2;   % Zs - Zu
+%% ---- Common Style --------------------------------------
+lw    = 1.8;
+fs    = 12;
+fst   = 13;
+col   = [0.08 0.35 0.72];
+fig_w = 620;
+fig_h = 340;
 
-%% ---- Figure ----------------------------------------
-figure('Name', 'Reponse Boucle Ouverte - Quart de Vehicule', ...
-       'Color', 'w', 'Position', [100 50 700 850]);
+%% ---- Figure 1: Sprung Mass Displacement Zs -------------
+figure('Name', 'Zs - Sprung Mass Displacement', 'Color', 'w', ...
+       'Position', [130 400 fig_w fig_h]);
 
-%-- 1: Déplacement vertical de la caisse Zs
-subplot(3,1,1);
-plot(t, x1, 'b', 'LineWidth', 1.5);
-title('déplacement vertical de la caisse Zs');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire', 'Location', 'best');
+h1 = plot(t, x1, 'Color', col, 'LineWidth', lw);
+xlabel('Time (s)',         'FontSize', fs, 'FontName', 'Times New Roman');
+ylabel('Displacement (m)', 'FontSize', fs, 'FontName', 'Times New Roman');
+title('Sprung Mass Vertical Displacement Z_s', ...
+      'FontSize', fst, 'FontName', 'Times New Roman', 'FontWeight', 'bold');
+legend(h1, {'Nonlinear Model'}, 'Location', 'best', ...
+       'FontSize', fs-1, 'FontName', 'Times New Roman');
 grid on;
-
-%-- 2: Déplacement vertical de la roue Zu
-subplot(3,1,2);
-plot(t, x2, 'b', 'LineWidth', 1.5);
-title('déplacement vertical de la roue Zu');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire', 'Location', 'best');
-grid on;
-
-%-- 3: Débattement de la suspension (Zs - Zu)
-subplot(3,1,3);
-plot(t, delta, 'b', 'LineWidth', 1.5);
-title('débattement de la suspension (Z-Zu)');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire', 'Location', 'best');
-grid on;
-
+set(gca, 'FontSize', fs, 'FontName', 'Times New Roman', 'Box', 'on');
+set(gcf, 'PaperUnits', 'centimeters', 'PaperSize', [16 9], ...
+         'PaperPosition', [0 0 16 9]);
 drawnow;
+
+%% ---- Figure 2: Unsprung Mass Displacement Zu -----------
+figure('Name', 'Zu - Unsprung Mass Displacement', 'Color', 'w', ...
+       'Position', [170 340 fig_w fig_h]);
+
+h2 = plot(t, x2, 'Color', col, 'LineWidth', lw);
+xlabel('Time (s)',         'FontSize', fs, 'FontName', 'Times New Roman');
+ylabel('Displacement (m)', 'FontSize', fs, 'FontName', 'Times New Roman');
+title('Unsprung Mass Vertical Displacement Z_u', ...
+      'FontSize', fst, 'FontName', 'Times New Roman', 'FontWeight', 'bold');
+legend(h2, {'Nonlinear Model'}, 'Location', 'best', ...
+       'FontSize', fs-1, 'FontName', 'Times New Roman');
+grid on;
+set(gca, 'FontSize', fs, 'FontName', 'Times New Roman', 'Box', 'on');
+set(gcf, 'PaperUnits', 'centimeters', 'PaperSize', [16 9], ...
+         'PaperPosition', [0 0 16 9]);
+drawnow;
+
+%% ---- Figure 3: Suspension Deflection (Zs - Zu) ---------
+figure('Name', 'Suspension Deflection Zs-Zu', 'Color', 'w', ...
+       'Position', [210 280 fig_w fig_h]);
+
+h3 = plot(t, delta, 'Color', col, 'LineWidth', lw);
+xlabel('Time (s)',         'FontSize', fs, 'FontName', 'Times New Roman');
+ylabel('Displacement (m)', 'FontSize', fs, 'FontName', 'Times New Roman');
+title('Suspension Deflection (Z_s - Z_u)', ...
+      'FontSize', fst, 'FontName', 'Times New Roman', 'FontWeight', 'bold');
+legend(h3, {'Nonlinear Model'}, 'Location', 'best', ...
+       'FontSize', fs-1, 'FontName', 'Times New Roman');
+grid on;
+set(gca, 'FontSize', fs, 'FontName', 'Times New Roman', 'Box', 'on');
+set(gcf, 'PaperUnits', 'centimeters', 'PaperSize', [16 9], ...
+         'PaperPosition', [0 0 16 9]);
+drawnow;
+
 end

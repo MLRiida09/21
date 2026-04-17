@@ -14,11 +14,11 @@ matrices
 
 %% ---- Simulink Model Setup --------------------------
 modelName = 'ActiveSupensionNonlinear';
-set_param(modelName, 'StopTime', '5');
+set_param(modelName, 'StopTime', '10');
 
 %% ---- Actuator Force Configuration ------------------
 % Set to 0 for Passive | nonzero for Active
-Fa_value = 20;
+Fa_value = 0;
 set_param([modelName '/fa'], 'Value', num2str(Fa_value));
 
 %% ---- Operation Mode --------------------------------
@@ -34,4 +34,3 @@ sim(modelName);
 
 %% ---- Plot Results ----------------------------------
 plotStateResponses();
-plotPerformanceVsRoad();

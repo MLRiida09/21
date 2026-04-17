@@ -1,19 +1,14 @@
-function d = road_disturbance(t)
-% ========================================================
-%  Road Disturbance Function - Double Bump
-%  --------------------------------------------------------
-%  d = y1*(1 - cos(4*pi*t)),   0   <= t <= 0.5
-%  d = y2*(1 - cos(4*pi*t)),   2   <= t <= 2.5
-%  d = 0,                       otherwise
-% ========================================================
-    y1 = 0.03;    % First  bump height  [m]
-    y2 = 0.05;    % Second bump height  [m]
+function d = road_bump(t)
 
-    if t >= 0 && t <= 0.5
-        d = y1 * (1 - cos(4*pi*t));
-    elseif t >= 2 && t <= 2.5
-        d = y2 * (1 - cos(4*pi*t));
-    else
-        d = 0;
+    % Parameters
+    h  = 0.04;   % bump height [m]
+    L  = 1;      % bump length [m]
+    v  = 10;     % vehicle speed [m/s]
+    t0 = 1;     % start time [s]
+
+    d = 0;
+
+    if t >= t0 && t <= t0 + L/v
+        d = (h/2) * (1 - cos(2*pi*v/L * (t - t0)));
     end
 end

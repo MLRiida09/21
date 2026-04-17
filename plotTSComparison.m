@@ -1,41 +1,59 @@
-%% ========================================================
-%  FUNCTION: plotTSComparison
-%  Comparaison: Modèle non-linéaire original vs T-S Fuzzy
-%% ========================================================
-function plotTSComparison(t, X_nl, X_ts, zr)
+function plotTSComparison(tspan, X_nl, X_ts, zr)
 
-% Extract states
-x1_nl  = X_nl(1,:);   x1_ts  = X_ts(1,:);
-x2_nl  = X_nl(3,:);   x2_ts  = X_ts(3,:);
-d_nl   = x1_nl - x2_nl;
-d_ts   = x1_ts - x2_ts;
+%% ---- States ----------------------------------------
+x1_nl = X_nl(1,:);   % Sprung mass
+x2_nl = X_nl(3,:);   % Unsprung mass
 
-%-- 1: Déplacement vertical de la caisse Zs
-figure(1);
-plot(t, x1_nl, 'b',  'LineWidth', 1.5); hold on;
-plot(t, x1_ts, 'r--','LineWidth', 1.5); hold off;
-title('déplacement vertical de la caisse Zs');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire','T-S','Location','best');
+x1_ts = X_ts(1,:);
+x2_ts = X_ts(3,:);
+
+delta_nl = x1_nl - x2_nl;
+delta_ts = x1_ts - x2_ts;
+
+error = abs(x1_nl - x1_ts);
+
+lw = 1.8;
+
+%% ---- Zs --------------------------------------------
+figure;
+plot(tspan, x1_nl, 'b', 'LineWidth', lw); hold on;
+plot(tspan, x1_ts, 'r--', 'LineWidth', lw);
+title('Sprung Mass Displacement Z_s');
+xlabel('Time (s)');
+ylabel('Displacement (m)');
+legend('Nonlinear','T-S Fuzzy');
 grid on;
 
-%-- 2: Déplacement vertical de la roue Zu
-figure(2);
-plot(t, x2_nl, 'b',  'LineWidth', 1.5); hold on;
-plot(t, x2_ts, 'r--','LineWidth', 1.5); hold off;
-title('déplacement vertical de la roue Zu');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire','T-S','Location','best');
+%% ---- Zu --------------------------------------------
+figure;
+plot(tspan, x2_nl, 'b', 'LineWidth', lw); hold on;
+plot(tspan, x2_ts, 'r--', 'LineWidth', lw);
+title('Unsprung Mass Displacement Z_u');
+xlabel('Time (s)');
+ylabel('Displacement (m)');
+legend('Nonlinear','T-S Fuzzy');
 grid on;
 
-%-- 3: Débattement de la suspension (Zs - Zu)
-figure(3);
-plot(t, d_nl, 'b',  'LineWidth', 1.5); hold on;
-plot(t, d_ts, 'r--','LineWidth', 1.5); hold off;
-title('débattement de la suspension (Zs-Zu)');
-xlabel('temps(s)'); ylabel('déplacement(m)');
-legend('non linéaire','T-S','Location','best');
+%% ---- Deflection ------------------------------------
+figure;
+plot(tspan, delta_nl, 'b', 'LineWidth', lw); hold on;
+plot(tspan, delta_ts, 'r--', 'LineWidth', lw);
+title('Suspension Deflection (Z_s - Z_u)');
+xlabel('Time (s)');
+ylabel('Displacement (m)');
+legend('Nonlinear','T-S Fuzzy');
 grid on;
 
-drawnow;
+
+
+%% ---- Road ------------------------------------------
+if nargin == 4
+    figure;
+    plot(tspan, zr, 'k', 'LineWidth', lw);
+    title('road disturbance');
+    xlabel('Time (s)');
+    ylabel('Road Profile (m)');
+    grid on;
+end
+
 end

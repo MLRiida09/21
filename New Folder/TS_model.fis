@@ -1,0 +1,30 @@
+[System]
+Name='TS_model'
+Type='sugeno'
+Version=2.0
+NumInputs=1
+NumOutputs=1
+NumRules=2
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='input1'
+Range=[0 0.01]
+NumMFs=2
+MF1='LARGE':'smf',[-0 0.01]
+MF2='SMALL':'zmf',[0 0.01]
+
+[Output1]
+Name='output1'
+Range=[0 1]
+NumMFs=2
+MF1='mf1':'constant',[0]
+MF2='mf2':'constant',[1]
+
+[Rules]
+2, 2 (1) : 1
+1, 1 (1) : 1

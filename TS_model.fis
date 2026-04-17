@@ -1,0 +1,30 @@
+[System]
+Name='TS_model'
+Type='sugeno'
+Version=2.0
+NumInputs=1
+NumOutputs=1
+NumRules=2
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='delta2'
+Range=[0 0.01]
+NumMFs=2
+MF1='SMALL':'zmf',[0 0.01]
+MF2='LARGE':'smf',[0 0.01]
+
+[Output1]
+Name='mu1'
+Range=[0 1]
+NumMFs=2
+MF1='HIGH':'constant',[1]
+MF2='LOW':'constant',[0]
+
+[Rules]
+1, 1 (1) : 1
+2, 2 (1) : 1
