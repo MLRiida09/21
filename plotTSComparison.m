@@ -47,12 +47,15 @@ grid on;
 
 
 %% ---- Road ------------------------------------------
+%% ---- Road ------------------------------------------
 if nargin == 4
     figure;
     plot(tspan, zr, 'k', 'LineWidth', lw);
-    title('road disturbance');
+    title('Road Disturbance Profile');
     xlabel('Time (s)');
     ylabel('Road Profile (m)');
+    xlim([0 2]);          % zoom in on the bump region (t0=1, ends at t0+L/v=1.1)
+    ylim([-0.005 0.05]);  % tight around bump height (h=0.04m)
     grid on;
 end
 

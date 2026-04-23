@@ -17,7 +17,7 @@ mode_str = 'active';
 %% ---- T-S Model Parameters --------------------------
 pmin = 16000;     
 pmax = 16500;     
-k_nl = 50000;     
+k_nl = 5000;     
 
 %% ---- T-S Matrices ----------------------------------
 A1 = [0          1        0              0;
@@ -40,20 +40,23 @@ dt   = 0.001;
 tspan = 0:dt:10;
 N    = length(tspan);
 
-%% ---- Road Disturbance (FIXED 4 ? 6) -----------------
+%% ---- Road Disturbance ------------------------------
+h  = 0.04;   % bump height [m]
+L  = 1;      % bump length [m]
+v  = 10;     % vehicle speed [m/s]
+t0 = 1;      % start time [s]
+
 zr = zeros(1, N);
 
 for i = 1:N
-    t = tspan(i);
-
-    if t >= 4 && t <= 6
-        zr(i) = 0.25;
-    else
-        zr(i) = 0;
+    t_i = tspan(i);
+    if t_i >= t0 && t_i <= t0 + L/v
+        zr(i) = (h/2) * (1 - cos(2*pi*v/L * (t_i - t0)));
     end
 end
 
 zr_dot = [diff(zr)/dt, 0];
+
 
 %% ---- Initial Conditions ----------------------------
 x0 = [0; 0; 0; 0];
