@@ -29,8 +29,8 @@ def_cl = Zs_cl - Zu_cl;
 lw     = 1.8;
 fs     = 12;
 fst    = 13;
-col_ol = [0.08 0.35 0.72];    % blue  - Open loop
-col_cl = [0.85 0.15 0.15];    % red   - Closed loop (H-inf)
+col_ol = [0.216 0.541 0.867];   % blue  #378ADD  - Open loop
+col_cl = [0.5 0 0.5];            % H-inf closed loop
 fig_w  = 700;
 fig_h  = 350;
 
@@ -39,7 +39,7 @@ figure('Name','Zs - Sprung Mass','Color','w','Position',[100 500 fig_w fig_h]);
 
 h1a = plot(tspan, Zs_ol, 'Color', col_ol, 'LineWidth', lw);
 hold on;
-h1b = plot(tspan, Zs_cl, '--', 'Color', col_cl, 'LineWidth', lw);
+h1b = plot(tspan, Zs_cl,  'Color', col_cl, 'LineWidth', lw);
 hold off;
 
 xlabel('Time (s)',          'FontSize', fs, 'FontName', 'Times New Roman');

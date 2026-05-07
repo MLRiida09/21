@@ -21,7 +21,7 @@ b    = 1000;     % Damper coefficient        [N.s/m]
 k2   = 190000;   % Tyre stiffness            [N/m]
 
 %% ---- Actuator --------------------------------------
-fa   = 20;       % Active actuator force     [N]
+
 
 %% ---- Display ---------------------------------------
 disp('? Parameters loaded successfully');

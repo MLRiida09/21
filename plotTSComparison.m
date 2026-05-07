@@ -1,56 +1,48 @@
 function plotTSComparison(tspan, X_nl, X_ts, zr)
-
 %% ---- States ----------------------------------------
 x1_nl = X_nl(1,:);   % Sprung mass
 x2_nl = X_nl(3,:);   % Unsprung mass
-
 x1_ts = X_ts(1,:);
 x2_ts = X_ts(3,:);
-
 delta_nl = x1_nl - x2_nl;
 delta_ts = x1_ts - x2_ts;
-
 error = abs(x1_nl - x1_ts);
-
 lw = 1.8;
-
+col_nl = [0 0.447 0.741];   % blue    - Nonlinearopenloop
+col_ts = [1 0.4 0.4];    %green     - T-S Fuzzy
+col_rd = [0.173 0.173 0.165];   % dark  #2C2C2A  - Road
 %% ---- Zs --------------------------------------------
 figure;
-plot(tspan, x1_nl, 'b', 'LineWidth', lw); hold on;
-plot(tspan, x1_ts, 'r--', 'LineWidth', lw);
+plot(tspan, x1_nl, 'Color', col_nl, 'LineWidth', lw); hold on;
+plot(tspan, x1_ts, '--', 'Color', col_ts, 'LineWidth', lw);
 title('Sprung Mass Displacement Z_s');
 xlabel('Time (s)');
 ylabel('Displacement (m)');
 legend('Nonlinear','T-S Fuzzy');
 grid on;
-
 %% ---- Zu --------------------------------------------
 figure;
-plot(tspan, x2_nl, 'b', 'LineWidth', lw); hold on;
-plot(tspan, x2_ts, 'r--', 'LineWidth', lw);
+plot(tspan, x2_nl, 'Color', col_nl, 'LineWidth', lw); hold on;
+plot(tspan, x2_ts, '--', 'Color', col_ts, 'LineWidth', lw);
 title('Unsprung Mass Displacement Z_u');
 xlabel('Time (s)');
 ylabel('Displacement (m)');
 legend('Nonlinear','T-S Fuzzy');
 grid on;
-
 %% ---- Deflection ------------------------------------
 figure;
-plot(tspan, delta_nl, 'b', 'LineWidth', lw); hold on;
-plot(tspan, delta_ts, 'r--', 'LineWidth', lw);
+plot(tspan, delta_nl, 'Color', col_nl, 'LineWidth', lw); hold on;
+plot(tspan, delta_ts, '--', 'Color', col_ts, 'LineWidth', lw);
 title('Suspension Deflection (Z_s - Z_u)');
 xlabel('Time (s)');
 ylabel('Displacement (m)');
 legend('Nonlinear','T-S Fuzzy');
 grid on;
-
-
-
 %% ---- Road ------------------------------------------
 %% ---- Road ------------------------------------------
 if nargin == 4
     figure;
-    plot(tspan, zr, 'k', 'LineWidth', lw);
+    plot(tspan, zr, 'Color', col_rd, 'LineWidth', lw);
     title('Road Disturbance Profile');
     xlabel('Time (s)');
     ylabel('Road Profile (m)');
@@ -58,5 +50,4 @@ if nargin == 4
     ylim([-0.005 0.05]);  % tight around bump height (h=0.04m)
     grid on;
 end
-
 end

@@ -75,7 +75,7 @@ for i = 1:2
 
         % ---- Block (1,1): A_i*Q + B*F_j + (*)' ----
         lmiterm([co, 1, 1, Q],  A{i}, 1, 's');   % A_i*Q + Q*A_i'
-        lmiterm([co, 1, 1, F{j}], B,  1, 's');   % B*F_j + F_j'*B'
+        lmiterm([co, 1, 1, F{j}], -B, 1, 's');  % adds -B*F - F'*B'
 
         % ---- Block (2,1): Bw' ----
         lmiterm([co, 2, 1, 0], Bw');              % constant term
